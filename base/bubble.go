@@ -1,30 +1,11 @@
 package base
 
-// 冒泡排序
-func BubbleSort1(arr []int, n int) {
-	for i := 0; i < n-1; i++ {
-		for j := n - 1; j > i; j-- {
-			if arr[j] < arr[j-1] {
-				arr[j], arr[j-1] = arr[j-1], arr[j]
-			}
-		}
-	}
-}
+/*冒泡排序*/
 
-func BubbleSort2(arr []int, n int) {
-	for i := 0; i < n-1; i++ {
-		for j := 0; j < n-1-i; j++ {
-			if arr[j] > arr[j+1] {
-				arr[j], arr[j+1] = arr[j+1], arr[j]
-			}
-		}
-	}
-}
-
-func BubbleSort3(arr []int, n int) {
-	for i := 0; i < n-1; i++ {
+func BubbleSort(arr []int, l, r int) {
+	for i := l; i < r; i++ {
 		flag := false
-		for j := 0; j < n-1-i; j++ {
+		for j := l; j < r-i; j++ {
 			if arr[j] > arr[j+1] {
 				arr[j], arr[j+1] = arr[j+1], arr[j]
 				flag = true
@@ -33,6 +14,26 @@ func BubbleSort3(arr []int, n int) {
 
 		if !flag { // 已排好序
 			break
+		}
+	}
+}
+
+func BubbleSort2(arr []int, l, r int) {
+	for i := l; i < r; i++ {
+		for j := r; j > i; j-- {
+			if arr[j] < arr[j-1] {
+				arr[j], arr[j-1] = arr[j-1], arr[j]
+			}
+		}
+	}
+}
+
+func BubbleSort3(arr []int, l, r int) {
+	for i := l; i < r; i++ {
+		for j := l; j < r-i; j++ {
+			if arr[j] > arr[j+1] {
+				arr[j], arr[j+1] = arr[j+1], arr[j]
+			}
 		}
 	}
 }

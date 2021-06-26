@@ -1,10 +1,10 @@
 package base
 
-// 选择排序
-func SelectSort(arr []int, n int) {
-	for i := 0; i < n; i++ {
+// SelectSort 选择排序
+func SelectSort(arr []int, l, r int) {
+	for i := l; i <= r; i++ {
 		min := i
-		for j := i + 1; j < n; j++ {
+		for j := i + 1; j <= r; j++ {
 			if arr[j] < arr[min] {
 				min = j
 			}
