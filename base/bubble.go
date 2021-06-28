@@ -2,11 +2,11 @@ package base
 
 /*冒泡排序*/
 
-func BubbleSort(arr []int, l, r int) {
-	for i := l; i < r; i++ {
+func BubbleSort(arr []interface{}, compare func(a, b interface{}) int) {
+	for i := 0; i < len(arr); i++ {
 		flag := false
-		for j := l; j < r-i; j++ {
-			if arr[j] > arr[j+1] {
+		for j := 0; j < len(arr)-1-i; j++ {
+			if compare(arr[j], arr[j+1]) > 0 {
 				arr[j], arr[j+1] = arr[j+1], arr[j]
 				flag = true
 			}
@@ -18,20 +18,20 @@ func BubbleSort(arr []int, l, r int) {
 	}
 }
 
-func BubbleSort2(arr []int, l, r int) {
-	for i := l; i < r; i++ {
-		for j := r; j > i; j-- {
-			if arr[j] < arr[j-1] {
+func BubbleSort2(arr []interface{}, compare func(a, b interface{}) int) {
+	for i := 0; i < len(arr)-1; i++ {
+		for j := len(arr) - 1; j > i; j-- {
+			if compare(arr[j], arr[j-1]) < 0 {
 				arr[j], arr[j-1] = arr[j-1], arr[j]
 			}
 		}
 	}
 }
 
-func BubbleSort3(arr []int, l, r int) {
-	for i := l; i < r; i++ {
-		for j := l; j < r-i; j++ {
-			if arr[j] > arr[j+1] {
+func BubbleSort3(arr []interface{}, compare func(a, b interface{}) int) {
+	for i := 0; i < len(arr)-1; i++ {
+		for j := 0; j < len(arr)-1-i; j++ {
+			if compare(arr[j], arr[j+1]) > 0 {
 				arr[j], arr[j+1] = arr[j+1], arr[j]
 			}
 		}

@@ -5,100 +5,50 @@ import (
 	"time"
 )
 
-var R = rand.New(rand.NewSource(time.Now().UnixNano()))
-
-// 快速排序
-func QuickSort(arr []int, n int) {
-	quickSort2(arr, 0, n-1)
+func init() {
+	rand.Seed(time.Now().UnixNano())
 }
 
-func quickSort(arr []int, l, r int) {
-	if l >= r {
+// QuickSort 三路快速排序
+// compare 元素大小比较方法
+// 返回值：
+// 负数	表示	a<b
+// 0	表示	a=b
+// 正数	表示	a>b
+func QuickSort(arr []interface{}, compare func(a, b interface{}) int) {
+	quickSort(arr, compare)
+}
+
+func quickSort(arr []interface{}, compare func(a, b interface{}) int) {
+	if len(arr) <= 15 {
+		InsertSort(arr, compare)
 		return
 	}
 
-	p := partition2(arr, l, r)
-	quickSort(arr, l, p-1)
-	quickSort(arr, p+1, r)
-}
+	// 随机取一个值作为中间值
+	t := rand.Intn(len(arr))
+	arr[0], arr[t] = arr[t], arr[0]
 
-// 基础版
-func partition1(arr []int, l, r int) int {
-	e := arr[l]
+	e := arr[0]
 
-	j := l
-	for i := l + 1; i <= r; i++ {
-		if arr[i] < e {
-			arr[i], arr[j+1] = arr[j+1], arr[i]
-			j++
-		}
-	}
-	arr[l], arr[j] = arr[j], arr[l]
-	return j
-}
+	lt := 0
+	i := 1
+	gt := len(arr)
 
-// 随机数优化
-func partition2(arr []int, l, r int) int {
-	t := l + R.Intn(r-l+1)
-	arr[l], arr[t] = arr[t], arr[l]
-
-	return partition3(arr, l, r)
-}
-
-// 双路快速排序
-func partition3(arr []int, l, r int) int {
-	e := arr[l]
-
-	i := l + 1
-	j := r
-	for {
-		for i <= r && arr[i] < e {
-			i++
-		}
-		for j > l && arr[j] > e {
-			j--
-		}
-		if i > j {
-			break
-		}
-		arr[i], arr[j] = arr[j], arr[i]
-		i++
-		j--
-	}
-	arr[l], arr[j] = arr[j], arr[l]
-	return j
-}
-
-// 三路快速排序
-func quickSort2(arr []int, l, r int) {
-	if l >= r {
-		return
-	}
-
-	// partition
-	t := l + R.Intn(r-l+1)
-	arr[l], arr[t] = arr[t], arr[l]
-
-	e := arr[l]
-
-	lt := l
-	i := l + 1
-	gt := r + 1
-
-	for i != gt {
-		if arr[i] < e {
+	for i < gt {
+		if compare(arr[i], e) < 0 {
 			arr[i], arr[lt+1] = arr[lt+1], arr[i]
 			lt++
 			i++
-		} else if arr[i] > e {
+		} else if compare(arr[i], e) > 0 {
 			arr[i], arr[gt-1] = arr[gt-1], arr[i]
 			gt--
 		} else {
 			i++
 		}
 	}
-	arr[l], arr[lt] = arr[lt], arr[l]
+	arr[0], arr[lt] = arr[lt], arr[0]
 
-	quickSort2(arr, l, lt-1)
-	quickSort2(arr, gt, r)
+	quickSort(arr[:lt], compare)
+	quickSort(arr[gt:], compare)
 }
