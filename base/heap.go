@@ -1,6 +1,10 @@
 package base
 
+import "github.com/skeletongo/datastructure/heap"
+
 // HeapSort 堆排序
+// 将原数组原地排序
+// 平均时间复杂度O(N)
 func HeapSort(arr []interface{}, compare func(a, b interface{}) int) {
 	n := len(arr)
 	if n < 2 {
@@ -37,4 +41,17 @@ func siftDown(arr []interface{}, i int, compare func(a, b interface{}) int) {
 		i = j
 	}
 	arr[i] = e
+}
+
+// IndexHeapSort 堆排序
+// 元素入堆再取出的方式
+// 平均时间复杂度O(nlogN)
+func HeapSort2(arr []interface{}, compare func(a, b interface{}) int) {
+	h := heap.New(compare)
+	for _, v := range arr {
+		h.Add(v)
+	}
+	for i := len(arr) - 1; i >= 0; i-- {
+		arr[i] = h.ExtractMax()
+	}
 }

@@ -179,9 +179,16 @@ func TestHeapSort(t *testing.T) {
 	}
 }
 
+func TestHeapSort2(t *testing.T) {
+	data := newInterfaceSlice(0, 10000, 10000)
+	if !sortTest(data, HeapSort2, compare) {
+		t.Error("堆排序错误")
+	}
+}
+
 // 大概比较一下不同排序算法的效率
 func TestSortTime(t *testing.T) {
-	n := 1000000
+	n := 10000
 	fmt.Println("测试序列数量级:", n)
 	data := make([]int, n)
 	// 随机序列
@@ -199,15 +206,16 @@ func TestSortTime(t *testing.T) {
 	// 大量重复值的序列
 	//data = newIntSlice(0, n/4, n)
 
-	//sortTimeTest("选择排序", copyInterfaceSlice(data), SelectSort, compare)
-	//sortTimeTest("插入排序", copyInterfaceSlice(data), InsertSort, compare)
-	//sortTimeTest("冒泡排序", copyInterfaceSlice(data), BubbleSort, compare)
-	//sortTimeTest("冒泡排序2", copyInterfaceSlice(data), BubbleSort2, compare)
-	//sortTimeTest("冒泡排序3", copyInterfaceSlice(data), BubbleSort3, compare)
-	//sortTimeTest("希尔排序", copyInterfaceSlice(data), ShellSort, compare)
-	//sortTimeTest("希尔排序2", copyInterfaceSlice(data), ShellSort2, compare)
+	sortTimeTest("选择排序", copyInterfaceSlice(data), SelectSort, compare)
+	sortTimeTest("插入排序", copyInterfaceSlice(data), InsertSort, compare)
+	sortTimeTest("冒泡排序", copyInterfaceSlice(data), BubbleSort, compare)
+	sortTimeTest("冒泡排序2", copyInterfaceSlice(data), BubbleSort2, compare)
+	sortTimeTest("冒泡排序3", copyInterfaceSlice(data), BubbleSort3, compare)
+	sortTimeTest("希尔排序", copyInterfaceSlice(data), ShellSort, compare)
+	sortTimeTest("希尔排序2", copyInterfaceSlice(data), ShellSort2, compare)
 	sortTimeTest("归并排序", copyInterfaceSlice(data), MergeSort, compare)
 	sortTimeTest("归并排序2", copyInterfaceSlice(data), MergeSortBU, compare)
 	sortTimeTest("快速排序", copyInterfaceSlice(data), QuickSort, compare)
 	sortTimeTest("堆排序", copyInterfaceSlice(data), HeapSort, compare)
+	sortTimeTest("堆排序2", copyInterfaceSlice(data), HeapSort2, compare)
 }
