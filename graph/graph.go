@@ -171,7 +171,7 @@ type Cycle struct {
 }
 
 // NewCycle 判断是否有环
-// 环：最少三个节点
+// 环：至少三条边
 func NewCycle(g Graph) *Cycle {
 	c := new(Cycle)
 	c.marked = make([]bool, g.V())
